@@ -18,8 +18,8 @@ const RegisterPage = () => {
        username
     })
 
-    if (response.ok) {
-      // Handle successful login, e.g., redirect to dashboard
+    if (response.status === 200) {
+      // Handle successful login, e.g., redirect to login
       navigate('/auth/login')
     } else {
       alert('incorrect username and or password')

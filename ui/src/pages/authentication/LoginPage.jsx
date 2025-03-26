@@ -42,14 +42,6 @@ const LoginPage = () => {
 
   return (
     <>
-      {/*
-          This example requires updating your template:
-
-          ```
-          <html class="h-full bg-white">
-          <body class="h-full">
-          ```
-        */}
       <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8'>
         <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
           <img
@@ -63,7 +55,6 @@ const LoginPage = () => {
         </div>
 
         <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
-          {/* <form action="http://localhost:8080/login" method="POST" className="space-y-6"> */}
           <form onSubmit={handleSubmit}>
             <div>
               <label htmlFor='email' className='block text-sm/6 font-medium text-gray-900'>
