@@ -1,12 +1,11 @@
 {
-  "name": "template",
+  "name": "jwt_express_react",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "start": "nodemon ./index.js",
-    "postinstall": "echo Run \\'npm start\\'. '\nYour app should now be running on localhost:3000.'"
+    "postinstall": ""
   },
   "keywords": [],
   "author": "",
@@ -18,6 +17,7 @@
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "sequelize": "^6.37.6",
+    "sqlite3": "^5.1.7",
     "winston": "^3.17.0"
   }
 }
