@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const authApi = axios.create({
-  baseURL: `http://localhost:${import.meta.env.VITE_BACKEND_PORT}`
+  baseURL: `http://localhost:${import.meta.env.VITE_BACKEND_PORT}/auth`
 })
 
 const api = axios.create({

@@ -29,7 +29,7 @@ const RootLayout = () => {
         console.log('logged in status', loginState)
         // console.log(response)
         const decoded = jwtDecode(token)
-        setUserName(decoded.email)
+        setUserName(decoded.username)
       } catch (err) {
         console.log(err)
         if (err.status === 401) {
