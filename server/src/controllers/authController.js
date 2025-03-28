@@ -9,7 +9,7 @@ const JWT_SECRET = process.env.JWT_SECRET
 
 export const verifyToken = (req, res) => {
   const { token } = req.body
-
+  // TODO: Send status 401 if no token
   try {
     // Verify the token using the JWT secret key
     jwt.verify(token, JWT_SECRET)
@@ -21,7 +21,7 @@ export const verifyToken = (req, res) => {
     // If verification fails (invalid or expired token), log the error
     console.log(error)
 
-    // Send a 401 (Unauthorized) response
+    // Unauthorized
     return res.sendStatus(401)
   }
 }
