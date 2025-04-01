@@ -60,9 +60,20 @@ This project demonstrates a full-stack application implementing JSON Web Token (
 2. **Frontend**
    - Update the API endpoint in the frontend to match the backend URL. This in the .env file in the ./ui directory
 
+### Running the Application
+
+1. **_Start the Backend and Front end_**
+   ```bash
+   npm start
+   ```
+   This will start the front end and the backend - running them concurrently.\
+   The frontend application will run at http://localhost:5173/ \
+   The API server will run at http://localhost:3000/
+
 ### Folder Structure
 
 ```bash
+ jwt_express_react/
  ├── package.json
  ├── README.md
  ├── server

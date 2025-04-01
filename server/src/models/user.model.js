@@ -10,5 +10,9 @@ const sequelize = new Sequelize({
 export const User = sequelize.define('User', {
   email: { type: DataTypes.TEXT, allowNull: false, unique: true },
   username: DataTypes.TEXT,
-  hashedPass: DataTypes.TEXT
+  hashedPass: DataTypes.TEXT,
+  role: {
+    type: DataTypes.TEXT,
+    defaultValue: 'user'
+  }
 })
