@@ -7,7 +7,7 @@ const PublicPage = () => {
   return (
     <>
       <div>PublicPage</div>
-      <div>Statues: {loggedIn ? 'logged in' : 'not logged in'}</div>
+      <div>Status: {loggedIn ? 'logged in' : 'not logged in'}</div>
     </>
   )
 }

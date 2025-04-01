@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon ./index.js",
-    "postinstall": ""
+    "postinstall": "node scripts/setup.js"
   },
   "keywords": [],
   "author": "",

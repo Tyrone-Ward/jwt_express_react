@@ -15,14 +15,12 @@ export const verifyToken = (req, res) => {
     jwt.verify(token, JWT_SECRET)
 
     // If verification is successful, log a message and send a 200 (OK) response
-    console.log('Token verified')
+    logger.info('Token verified')
     return res.sendStatus(200)
   } catch (error) {
-    // If verification fails (invalid or expired token), log the error
-    console.log(error)
-
     // Unauthorized
-    return res.sendStatus(401)
+    console.log(error)
+    return res.status(401).json({ message: 'Unauthorized' })
   }
 }
 // TODO: Add user validation
@@ -56,14 +54,14 @@ export const login = async (req, res) => {
     }
 
     // Compare passwords
-    console.log(user.hashedPass)
+    // console.log(user.hashedPass)
     const isMatch = await bcrypt.compare(password, user.hashedPass)
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid email or password' })
     }
 
     // Generate JWT Token
-    const token = jwt.sign({ username: user.username }, JWT_SECRET, { expiresIn: '1h' })
+    const token = jwt.sign({ username: user.username }, JWT_SECRET, { expiresIn: '24h' })
 
     res.json({ token })
   } catch (error) {
