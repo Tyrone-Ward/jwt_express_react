@@ -26,6 +26,7 @@ export const verifyToken = (req, res) => {
 // TODO: Add user validation
 export const register = async (req, res) => {
   try {
+    const role = 'admin'
     const { password, email, username } = req.body
 
     const salt = await bcrypt.genSalt(10)

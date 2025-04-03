@@ -6,8 +6,11 @@ import { AppError } from '../utils/AppError.js'
 export const createUser = async (email, userName, hashedPass) => {
   try {
     await User.sync()
+    const users = await User.findAll()
+    const role = users.length === 0 ? 'admin' : 'user'
+
     logger.info('The table for the User model was just (re)created!')
-    const newUser = await User.create({ email, username: userName, hashedPass })
+    const newUser = await User.create({ email, username: userName, hashedPass, role })
     console.log("new User's auto-generated ID:", newUser.id)
   } catch (error) {
     // console.log(error.name)
