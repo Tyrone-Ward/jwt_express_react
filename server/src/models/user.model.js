@@ -8,8 +8,10 @@ const sequelize = new Sequelize({
 })
 
 export const User = sequelize.define('User', {
+  id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
   email: { type: DataTypes.TEXT, allowNull: false, unique: true },
-  username: DataTypes.TEXT,
+  username: { type: DataTypes.TEXT, unique: true },
   hashedPass: DataTypes.TEXT,
-  role: DataTypes.TEXT
+  role: DataTypes.TEXT,
+  isActive: { type: DataTypes.BOOLEAN, defaultValue: true }
 })

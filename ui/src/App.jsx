@@ -13,11 +13,13 @@ import AuthLayout from './layouts/AuthLayout.jsx'
 
 // Pages
 import LoginPage from './pages/authentication/LoginPage.jsx'
+import RegisterPage from './pages/authentication/RegisterPage.jsx'
 import AdminPage from './pages/AdminPage.jsx'
 import HomePage from './pages/HomePage.jsx'
 import NotFound from './pages/NotFound.jsx'
 import PublicPage from './pages/PublicPage.jsx'
-import RegisterPage from './pages/authentication/RegisterPage.jsx'
+import UsersPage from './pages/UsersPage.jsx'
+import ProfilePage from './pages/ProfilePage.jsx'
 
 function App () {
   return (
@@ -33,6 +35,8 @@ function App () {
           <Route path='admin' element={<AdminPage />} />  
           <Route index element={<HomePage />} />
           <Route path='public' element={<PublicPage/>} />
+          <Route path='users' element={<UsersPage/>} />
+          <Route path='profile' element={<ProfilePage/>} />
           <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>

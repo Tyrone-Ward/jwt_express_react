@@ -3,13 +3,14 @@ import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { jwtDecode } from "jwt-decode"
 import { useNavigate } from "react-router-dom"
-import { useIsLoggedIn, useSetUserName, useSetIsLoggedIn } from '../stores/auth/auth.store'
+import { useIsLoggedIn, useSetUserName, useSetIsLoggedIn, useSetUserRole } from '../stores/auth/auth.store'
 import { authApi } from '../api'
 
 const RootLayout = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const setUserName = useSetUserName()
+  const setUserRole = useSetUserRole()
   const loginState = useIsLoggedIn()
   const setLoggedInState = useSetIsLoggedIn()
 
@@ -30,6 +31,7 @@ const RootLayout = () => {
         // console.log(response)
         const decoded = jwtDecode(token)
         setUserName(decoded.username)
+        setUserRole(decoded.role)
       } catch (err) {
         console.log(err)
         if (err.status === 401) {
