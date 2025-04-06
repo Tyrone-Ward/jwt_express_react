@@ -9,7 +9,8 @@ const JWT_SECRET = process.env.JWT_SECRET
 
 export const verifyToken = (req, res) => {
   const { token } = req.body
-  // TODO: Send status 401 if no token
+  // DONE: Send status 401 if no token
+  if (!token) return res.status(401).json({ message: 'No token provided' })
   try {
     // Verify the token using the JWT secret key
     jwt.verify(token, JWT_SECRET)
@@ -69,4 +70,10 @@ export const login = async (req, res) => {
     console.error(error)
     res.status(500).json({ message: 'Server error', error: error.message })
   }
+}
+export const getUserData = async () => {
+  // Take user id locate in database and return username, email, bio, etc
+}
+export const listUsers = async () => {
+  // List all users
 }
