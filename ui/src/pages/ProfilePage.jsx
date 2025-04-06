@@ -28,9 +28,7 @@ const ProfilePage = () => {
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm/6 font-medium text-gray-900">Bio</dt>
             <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
-              Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur
-              qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud
-              pariatur mollit ad adipisicing reprehenderit deserunt qui eu.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente dolorem praesentium sit nam. Voluptas ab maxime nulla itaque commodi repellat quidem rerum ipsam distinctio nostrum ipsum, similique expedita fugit soluta!
             </dd>
           </div>
         </dl>

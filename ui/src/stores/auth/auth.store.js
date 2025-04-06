@@ -16,13 +16,14 @@ export const useAuthStore = create((set) => ({
 }))
 
 // Actions
-export const useUserLogout = () => useAuthStore((state) => state.userLogout)
-export const useSetIsLoggedIn = () => useAuthStore((state) => state.setIsLoggedIn)
 export const useSetUserName = () => useAuthStore((state) => state.setUserName)
-export const useSetUserRole = () => useAuthStore((state) => state.setuserRole)
+export const useSetUserRole = () => useAuthStore((state) => state.setUserRole)
 export const useSetUserId = () => useAuthStore((state) => state.setUserId)
+export const useSetIsLoggedIn = () => useAuthStore((state) => state.setIsLoggedIn)
+export const useUserLogout = () => useAuthStore((state) => state.userLogout)
 
 // Hooks
-export const useIsLoggedIn = () => useAuthStore((state) => state.isLoggedIn)
 export const useUsername = () => useAuthStore((state) => state.userName)
 export const useUserRole = () => useAuthStore((state) => state.userRole)
+export const useUserId = () => useAuthStore((state) => state.userId)
+export const useIsLoggedIn = () => useAuthStore((state) => state.isLoggedIn)
