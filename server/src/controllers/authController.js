@@ -20,7 +20,10 @@ export const verifyToken = (req, res) => {
     return res.sendStatus(200)
   } catch (error) {
     // Unauthorized
-    console.log(error)
+    console.log(error.message)
+    if (error.message === 'jwt expired') {
+      return res.status(401).json({ message: 'Token Expired' })
+    }
     return res.status(401).json({ message: 'Unauthorized' })
   }
 }
