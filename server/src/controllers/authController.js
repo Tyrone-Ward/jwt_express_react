@@ -77,6 +77,17 @@ export const login = async (req, res) => {
 export const getUserData = async () => {
   // Take user id locate in database and return username, email, bio, etc
 }
-export const listUsers = async () => {
-  // List all users
+export const listUsers = async (req, res) => {
+  // TODO: add authentication middleware
+  // res.status(200).send('hello')
+  try {
+    const users = await User.findAll()
+    const u = []
+    users.forEach((user) => {
+      u.push({ id: user.dataValues.id, username: user.dataValues.username, email: user.dataValues.email, role: user.dataValues.role })
+    })
+    res.status(200).send(u)
+  } catch (error) {
+    console.log(error)
+  }
 }

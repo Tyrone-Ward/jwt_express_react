@@ -5,6 +5,7 @@ import { jwtDecode } from "jwt-decode"
 import { useNavigate } from "react-router-dom"
 import { useIsLoggedIn, useSetUserName, useSetIsLoggedIn, useSetUserRole, useSetUserId } from '../stores/auth/auth.store'
 import { authApi } from '../api'
+import { Navbar } from '../components/Navbar.jsx'
 
 const RootLayout = () => {
   const navigate = useNavigate()
@@ -49,7 +50,12 @@ const RootLayout = () => {
   }, [location, loginState])
 
   return (
-      contentVisible ? <Outlet/> : <div></div>
+      contentVisible ? 
+      <main>
+        <Navbar/>
+        <Outlet/>
+      </main> : 
+      <div></div>
   )
 }
 
