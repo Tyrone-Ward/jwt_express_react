@@ -23,7 +23,7 @@ const UsersPage = () => {
       controller.abort()
     }
   }, [])
-
+// TODO: Change to a stacked list https://tailwindcss.com/plus/ui-blocks/application-ui/lists/stacked-lists
   return ( tableData && 
     <div>
       <table className="border-collapse border border-gray-400 w-full">
@@ -43,7 +43,7 @@ const UsersPage = () => {
               <td className="border-t-1 border-gray-400 p-2">{row.username}</td>
               <td className="border-t-1 border-gray-400 p-2">{row.email}</td>
               <td className="border-t-1 border-gray-400 p-2 text-center">{row.role}</td>
-              <td className="border-t-1 border-gray-400 p-2 text-center bbl bwd"><a href='#'>Edit</a></td>
+              <td className="border-t-1 border-gray-400 p-2 text-center"><a href='#'>Edit</a></td>
             </tr>
           ))}
         </tbody>

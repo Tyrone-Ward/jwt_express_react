@@ -11,7 +11,7 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // TODO: Use Axios
+    // DONE: Use Axios
     const response = await authApi.post('/register', {
        email,
        password,
