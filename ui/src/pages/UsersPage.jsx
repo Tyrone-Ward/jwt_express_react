@@ -5,7 +5,6 @@ const UsersPage = () => {
   const [tableData, setTableData] = useState()
 
   useEffect(() => {
-    console.log('does this work?')
     const controller = new AbortController()
     const getUsersData = async () => {
       try {
