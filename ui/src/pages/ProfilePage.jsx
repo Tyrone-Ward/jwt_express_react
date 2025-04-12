@@ -1,9 +1,10 @@
 import React from 'react'
-import { useUsername, useUserRole  } from '../stores/auth/auth.store'
+import { useUsername, useUserRole, useUserId  } from '../stores/auth/auth.store'
 
 const ProfilePage = () => {
   const username = useUsername()
   const role = useUserRole()
+  const uid = useUserId()
 
   return (
     <div className='px-20 py-20'>
@@ -18,19 +19,19 @@ const ProfilePage = () => {
             <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">{username}</dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm/6 font-medium text-gray-900">Email address</dt>
-            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">margotfoster@example.com</dd>
+            <dt className="text-sm/6 font-medium text-gray-900">User ID</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">{uid}</dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm/6 font-medium text-gray-900">Role</dt>
             <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">{role.toUpperCase()}</dd>
           </div>
-          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm/6 font-medium text-gray-900">Bio</dt>
             <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente dolorem praesentium sit nam. Voluptas ab maxime nulla itaque commodi repellat quidem rerum ipsam distinctio nostrum ipsum, similique expedita fugit soluta!
             </dd>
-          </div>
+          </div> */}
         </dl>
       </div>
     </div>

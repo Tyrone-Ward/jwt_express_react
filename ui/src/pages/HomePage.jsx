@@ -5,11 +5,10 @@ import { useIsLoggedIn, useUsername } from '../stores/auth/auth.store';
 const HomePage = () => {
   const username = useUsername()
   const loggedIn = useIsLoggedIn()
-  console.log(loggedIn)
 
   return (
     <div>
-      <h1>Hello {loggedIn ? username : 'stranger'}</h1>
+      <h1>Hello, {loggedIn ? username + '👋!' : 'stranger'}</h1>
         <div>
             <ul className="m-8 list-disc">
                 <li>

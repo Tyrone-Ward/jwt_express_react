@@ -31,16 +31,12 @@ function App () {
           <Route path='register' element={<RegisterPage />} />
         </Route>
 
-        <Route path='/' element={<AuthLayout />}>
-          <Route index element={<HomePage />} />
-        </Route>
-
         <Route path='/' element={<RootLayout />}>
           <Route index element={<HomePage />} />
           <Route path='admin' element={<AdminPage />} />  
-          <Route path='public' element={<PublicPage/>} />
           <Route path='users' element={<UsersPage/>} />
           <Route path='profile' element={<ProfilePage/>} />
+          <Route path='public' element={<PublicPage/>} />
           <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
