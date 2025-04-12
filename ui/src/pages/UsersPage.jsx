@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import {authApi} from "../api"
+import authDataApi from '../api/index.js'
 
 const UsersPage = () => {
   const [tableData, setTableData] = useState()
@@ -8,7 +8,7 @@ const UsersPage = () => {
     const controller = new AbortController()
     const getUsersData = async () => {
       try {
-        const response = await authApi.get('/listAllUsers', { signal: controller.signal })
+        const response = await authDataApi.get('/listAllUsers', { signal: controller.signal })
         console.log(response.data)
         setTableData(response.data)      
       } catch (error) {

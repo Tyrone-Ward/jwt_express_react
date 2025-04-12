@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-export const useAuthStore = create((set) => ({
+export const AuthStore = create((set) => ({
   userName: 'unknown',
   userRole: 'unknown',
   userId: 'unknown',
@@ -16,14 +16,14 @@ export const useAuthStore = create((set) => ({
 }))
 
 // Actions
-export const useSetUserName = () => useAuthStore((state) => state.setUserName)
-export const useSetUserRole = () => useAuthStore((state) => state.setUserRole)
-export const useSetUserId = () => useAuthStore((state) => state.setUserId)
-export const useSetIsLoggedIn = () => useAuthStore((state) => state.setIsLoggedIn)
-export const useUserLogout = () => useAuthStore((state) => state.userLogout)
+export const useSetUserName = () => AuthStore((state) => state.setUserName)
+export const useSetUserRole = () => AuthStore((state) => state.setUserRole)
+export const useSetUserId = () => AuthStore((state) => state.setUserId)
+export const useSetIsLoggedIn = () => AuthStore((state) => state.setIsLoggedIn)
+export const useUserLogout = () => AuthStore((state) => state.userLogout)
 
 // Hooks
-export const useUsername = () => useAuthStore((state) => state.userName)
-export const useUserRole = () => useAuthStore((state) => state.userRole)
-export const useUserId = () => useAuthStore((state) => state.userId)
-export const useIsLoggedIn = () => useAuthStore((state) => state.isLoggedIn)
+export const useUsername = () => AuthStore((state) => state.userName)
+export const useUserRole = () => AuthStore((state) => state.userRole)
+export const useUserId = () => AuthStore((state) => state.userId)
+export const useIsLoggedIn = () => AuthStore((state) => state.isLoggedIn)

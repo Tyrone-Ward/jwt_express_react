@@ -4,14 +4,14 @@ export const authApi = axios.create({
   baseURL: `/auth`
 })
 
-const api = axios.create({
-  baseURL: `/api/v1`,
+const authDataApi = axios.create({
+  baseURL: `/auth`,
   headers: {
     'Content-Type': 'application/json'
   }
 })
 
-api.interceptors.request.use(
+authDataApi.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token')
     if (token) {
@@ -22,4 +22,4 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 )
 
-export default api
+export default authDataApi

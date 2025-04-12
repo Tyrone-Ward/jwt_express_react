@@ -20,7 +20,7 @@ app.use(morganMiddleware)
 
 app.use('/', rootRouter)
 app.use('/auth', authRouter)
-// app.use('/v2/api', apiRouter)
+app.use('/v1/api', authRouter)
 
 app.use(errorHandler)
 
