@@ -68,12 +68,13 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: 'Invalid email or password' })
     }
 
-    // Generate and store JWT Tokens
-    await RefreshToken.sync()
+    // Generate JWT Tokens
     logger.info('The table for the RefreshToken model was just (re)created!')
-    const accessToken = jwt.sign({ username: user.username, role: user.role, id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '24h' })
-    const refreshToken = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '24h' })
+    const accessToken = jwt.sign({ username: user.username, role: user.role, id: user.id, email: user.email }, JWT_SECRET, { expiresIn: ACCESS_TOKEN_EXPIRES_IN })
+    const refreshToken = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: REFRESH_TOKEN_EXPIRES_IN })
     const tokenHash = await bcrypt.hash(refreshToken, 10)
+    // Sore the refresh token
+    await RefreshToken.sync()
     await RefreshToken.create({
       tokenHash,
       userId: user.id,
@@ -96,7 +97,15 @@ export const getUserData = async () => {
 }
 export const listUsers = async (req, res) => {
   // DONE: add authentication middleware
+  const authHeader = req.headers['authorization']
+
+  // Format: "Bearer <token>"
+  const token = authHeader && authHeader.split(' ')[1]
   try {
+    jwt.verify(token, JWT_SECRET, (err, user) => {
+      if (user?.role !== 'admin') throw new Error()
+      req.user = user // Add user info to request object
+    })
     const users = await User.findAll()
     const u = []
     users.forEach((user) => {
@@ -104,7 +113,7 @@ export const listUsers = async (req, res) => {
     })
     res.status(200).send(u)
   } catch (error) {
-    console.log(error)
+    return res.status(403).json({ message: 'Token is invalid or expired' })
   }
 }
 // 0 TODO: create controller(s) for logout
