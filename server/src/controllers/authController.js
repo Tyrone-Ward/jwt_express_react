@@ -108,7 +108,7 @@ export const listUsers = async (req, res) => {
     return res.status(403).json({ message: 'Token is invalid or expired' })
   }
 }
-// 0 TODO: create controller(s) for logout
+// DONE: create controller(s) for logout
 export const logout = async (req, res) => {
   try {
     const tokens = await RefreshToken.findAll()
