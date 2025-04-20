@@ -1,13 +1,19 @@
 import { create } from 'zustand'
+import { authApi } from '../../api'
 
 export const AuthStore = create((set) => ({
   userName: 'unknown',
   userRole: 'unknown',
   userId: 'unknown',
   isLoggedIn: false,
-  userLogout: () => {
+  userLogout: async () => {
     set({ isLoggedIn: false })
     localStorage.removeItem('token')
+    try {
+      await authApi.post('/logout', {}, { withCredentials: true })
+    } catch (error) {
+      console.error('Error in data fetch:', error)
+    }
   },
   setUserName: (uName) => set({ userName: uName }),
   setUserRole: (uRole) => set({ userRole: uRole }),

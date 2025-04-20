@@ -72,7 +72,7 @@ export const login = async (req, res) => {
     logger.info('The table for the RefreshToken model was just (re)created!')
     const accessToken = jwt.sign({ username: user.username, role: user.role, id: user.id, email: user.email }, JWT_SECRET, { expiresIn: ACCESS_TOKEN_EXPIRES_IN })
     const refreshToken = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: REFRESH_TOKEN_EXPIRES_IN })
-    const tokenHash = await bcrypt.hash(refreshToken, 10)
+    const tokenHash = refreshToken
     // Sore the refresh token
     await RefreshToken.sync()
     await RefreshToken.create({
@@ -117,14 +117,11 @@ export const logout = async (req, res) => {
       return res.status(400).json({ message: 'No refresh token provided.' })
     }
     // Delete the refresh token from the DB
-    for (const t of tokens) {
-      const match = await bcrypt.compare(refreshToken, t.tokenHash)
-      if (match) {
-        logger.info('found token')
-        await t.destroy()
-        break
+    await RefreshToken.destroy({
+      where: {
+        tokenHash: refreshToken
       }
-    }
+    })
     // Clear the cookie
     res.clearCookie('refreshToken', {
       httpOnly: true,
