@@ -109,3 +109,30 @@ export const listUsers = async (req, res) => {
   }
 }
 // 0 TODO: create controller(s) for logout
+export const logout = async (req, res) => {
+  try {
+    const tokens = await RefreshToken.findAll()
+    const refreshToken = req.cookies?.refreshToken
+    if (!refreshToken) {
+      return res.status(400).json({ message: 'No refresh token provided.' })
+    }
+    // Delete the refresh token from the DB
+    for (const t of tokens) {
+      const match = await bcrypt.compare(refreshToken, t.tokenHash)
+      if (match) {
+        logger.info('found token')
+        await t.destroy()
+        break
+      }
+    }
+    // Clear the cookie
+    res.clearCookie('refreshToken', {
+      httpOnly: true,
+      sameSite: 'Lax'
+    })
+    return res.status(200).json({ message: 'Logged out successfully.' })
+  } catch (error) {
+    logger.error('Logout error:', error)
+    return res.status(500).json({ message: 'Server error during logout.' })
+  }
+}
