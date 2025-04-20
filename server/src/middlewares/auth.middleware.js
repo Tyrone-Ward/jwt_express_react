@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 
-const JWT_SECRET = process.env.JWT_SECRET
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET
 
 const authCheck = (req, res, next) => {
   const authHeader = req.headers['authorization']
@@ -13,7 +13,7 @@ const authCheck = (req, res, next) => {
     return
   }
   try {
-    const user = jwt.verify(token, JWT_SECRET)
+    const user = jwt.verify(token, ACCESS_TOKEN_SECRET)
     if (user.role !== 'admin') throw new Error()
     req.user = user // Add user info to request object
   } catch (error) {

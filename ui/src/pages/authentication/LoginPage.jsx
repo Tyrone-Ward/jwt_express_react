@@ -30,7 +30,7 @@ const LoginPage = () => {
       // console.log(response)
       if (response.status === 200) {
         // Handle successful login, e.g., redirect to dashboard
-        const resToken = response.data.token
+        const resToken = response.data.accessToken
         localStorage.setItem('token', resToken)
         navigate(prevLocation)
       }

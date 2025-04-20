@@ -5,7 +5,6 @@ import logger from '../utils/logger.js'
 import bcrypt from 'bcryptjs'
 import { User, RefreshToken } from '../models/user.model.js'
 
-const JWT_SECRET = process.env.JWT_SECRET
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET
 const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET
 const ACCESS_TOKEN_EXPIRES_IN = '15m'
@@ -17,7 +16,7 @@ export const verifyToken = (req, res) => {
   if (!token) return res.status(401).json({ message: 'No token provided' })
   try {
     // Verify the token using the JWT secret key
-    jwt.verify(token, JWT_SECRET)
+    jwt.verify(token, ACCESS_TOKEN_SECRET)
 
     // If verification is successful, log a message and send a 200 (OK) response
     logger.info('Token verified')
@@ -51,7 +50,7 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body
 
-    // Validate input
+    // Check if email and password are provided
     if (!email || !password) {
       return res.status(400).json({ message: 'All fields are required' })
     }
@@ -70,8 +69,8 @@ export const login = async (req, res) => {
 
     // Generate JWT Tokens
     logger.info('The table for the RefreshToken model was just (re)created!')
-    const accessToken = jwt.sign({ username: user.username, role: user.role, id: user.id, email: user.email }, JWT_SECRET, { expiresIn: ACCESS_TOKEN_EXPIRES_IN })
-    const refreshToken = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: REFRESH_TOKEN_EXPIRES_IN })
+    const accessToken = jwt.sign({ username: user.username, role: user.role, id: user.id, email: user.email }, ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_EXPIRES_IN })
+    const refreshToken = jwt.sign({ id: user.id }, REFRESH_TOKEN_SECRET, { expiresIn: REFRESH_TOKEN_EXPIRES_IN })
     const tokenHash = refreshToken
     // Sore the refresh token
     await RefreshToken.sync()
@@ -81,12 +80,8 @@ export const login = async (req, res) => {
       expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
     })
 
-    res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      sameSite: 'Lax',
-      maxAge: 7 * 24 * 60 * 60 * 1000
-    })
-    res.json({ token: accessToken })
+    res.append('Authorization', refreshToken)
+    res.json({ accessToken })
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Server error', error: error.message })
