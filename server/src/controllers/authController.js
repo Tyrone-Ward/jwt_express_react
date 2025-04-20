@@ -3,9 +3,13 @@ import { createUser } from '../services/user.service.js'
 import { AppError } from '../utils/AppError.js'
 import logger from '../utils/logger.js'
 import bcrypt from 'bcryptjs'
-import { User } from '../models/user.model.js'
+import { User, RefreshToken } from '../models/user.model.js'
 
 const JWT_SECRET = process.env.JWT_SECRET
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET
+const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET
+const ACCESS_TOKEN_EXPIRES_IN = '15m'
+const REFRESH_TOKEN_EXPIRES_IN = '7d'
 
 export const verifyToken = (req, res) => {
   const { token } = req.body
@@ -27,7 +31,7 @@ export const verifyToken = (req, res) => {
     return res.status(401).json({ message: 'Unauthorized' })
   }
 }
-// TODO: Add user validation
+// 4 TODO: Add user validation
 export const register = async (req, res) => {
   try {
     const role = 'admin'
@@ -59,16 +63,29 @@ export const login = async (req, res) => {
     }
 
     // Compare passwords
-    // console.log(user.hashedPass)
     const isMatch = await bcrypt.compare(password, user.hashedPass)
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid email or password' })
     }
 
-    // Generate JWT Token
-    const token = jwt.sign({ username: user.username, role: user.role, id: user.id }, JWT_SECRET, { expiresIn: '24h' })
+    // Generate and store JWT Tokens
+    await RefreshToken.sync()
+    logger.info('The table for the RefreshToken model was just (re)created!')
+    const accessToken = jwt.sign({ username: user.username, role: user.role, id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '24h' })
+    const refreshToken = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '24h' })
+    const tokenHash = await bcrypt.hash(refreshToken, 10)
+    await RefreshToken.create({
+      tokenHash,
+      userId: user.id,
+      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+    })
 
-    res.json({ token })
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      sameSite: 'Lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000
+    })
+    res.json({ token: accessToken })
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Server error', error: error.message })
@@ -78,8 +95,7 @@ export const getUserData = async () => {
   // Take user id locate in database and return username, email, bio, etc
 }
 export const listUsers = async (req, res) => {
-  // TODO: add authentication middleware
-  // res.status(200).send('hello')
+  // DONE: add authentication middleware
   try {
     const users = await User.findAll()
     const u = []
@@ -91,3 +107,4 @@ export const listUsers = async (req, res) => {
     console.log(error)
   }
 }
+// 0 TODO: create controller(s) for logout

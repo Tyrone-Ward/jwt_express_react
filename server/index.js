@@ -30,8 +30,8 @@ let SHUTDOWN = false
 process.on('SIGINT', async () => {
   if (!SHUTDOWN) {
     logger.info('Closing connections')
-    expressServer.close()
     await sequelize.close()
+    expressServer.close()
   }
 })
 
