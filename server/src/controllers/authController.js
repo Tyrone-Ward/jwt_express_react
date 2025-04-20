@@ -97,15 +97,7 @@ export const getUserData = async () => {
 }
 export const listUsers = async (req, res) => {
   // DONE: add authentication middleware
-  const authHeader = req.headers['authorization']
-
-  // Format: "Bearer <token>"
-  const token = authHeader && authHeader.split(' ')[1]
   try {
-    jwt.verify(token, JWT_SECRET, (err, user) => {
-      if (user?.role !== 'admin') throw new Error()
-      req.user = user // Add user info to request object
-    })
     const users = await User.findAll()
     const u = []
     users.forEach((user) => {
