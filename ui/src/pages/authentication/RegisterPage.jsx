@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { authApi } from "../../api"
 
 const RegisterPage = () => {
@@ -185,7 +185,7 @@ const RegisterPage = () => {
 
               <p class='mt-4 text-sm  sm:mt-0'>
                 Already have an account?
-                <a href='#' class=' underline'>Log in</a>.
+                <Link to='/auth/login' class=' underline'>Log in</Link>.
               </p>
             </div>
           </form>

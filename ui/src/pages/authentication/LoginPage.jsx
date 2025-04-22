@@ -15,7 +15,7 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      login(email, password)
+      await login(email, password)
       navigate('/admin')
     } catch (error) {
       console.log(error.message)

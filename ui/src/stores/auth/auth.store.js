@@ -1,13 +1,17 @@
 import { create } from 'zustand'
 import { toast } from 'react-toastify'
 import { authApi } from '../../api'
+import { jwtDecode } from 'jwt-decode'
 
 export const AuthStore = create((set) => ({
   userName: undefined,
   userRole: 'user',
-  userId: '',
+  userId: undefined,
   isLoggedIn: false,
   userLogout: async () => {
+    set({ userName: undefined })
+    set({ userRole: 'user' })
+    set({ userId: undefined })
     set({ isLoggedIn: false })
     localStorage.removeItem('token')
     try {
@@ -26,12 +30,20 @@ export const AuthStore = create((set) => ({
       if (response.status === 200) {
         // Handle successful login, e.g., set username, role, etc
         const resToken = response.data.accessToken
+        const decoded = jwtDecode(resToken)
+        console.log(decoded)
+        set({ userName: decoded.username })
+        set({ userRole: decoded.role })
+        set({ userId: decoded.id })
+        set({ isLoggedIn: true })
         localStorage.setItem('token', resToken)
       }
     } catch (error) {
       if (error.status === 400) {
         console.log(error)
         toast.error('Wrong username and/or password.')
+      } else {
+        console.log(error)
       }
     }
   },

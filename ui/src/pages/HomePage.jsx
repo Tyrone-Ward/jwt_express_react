@@ -1,6 +1,6 @@
 import React from 'react'
-import { Link } from "react-router-dom";
-import { useIsLoggedIn, useUsername } from '../stores/auth/auth.store';
+import { Link } from "react-router-dom"
+import { useIsLoggedIn, useUsername } from '../stores/auth/auth.store'
 
 const HomePage = () => {
   const username = useUsername()
