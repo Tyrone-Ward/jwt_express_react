@@ -20,34 +20,34 @@ const RootLayout = () => {
   const [contentVisible, setContentVisible] = useState(false)
 
   useEffect(() => {
-    setContentVisible(false)
+    setContentVisible(true)
     const controller = new AbortController()
 
     console.log('Route changed:', location.pathname);
-    const checkJWT = async () => {
-      try {
-        const response = await authApi.post('/verifyToken', {token, signal: controller.signal})
-        setContentVisible(true)
-        setLoggedInState(true)
-        console.log('logged in status', loginState)
-        // console.log(response)
-        const decoded = jwtDecode(token)
-        console.log(decoded)
-        setUserName(decoded.username)
-        setUserRole(decoded.role)
-        setUserId(decoded.id)
-      } catch (err) {
-        console.log(err)
-        if (err.status === 401) {
-          navigate('/auth/login', { state: { prevLocation: "/admin" } })
-      }
-    }
-  }
-    checkJWT()
+  //   const checkJWT = async () => {
+  //     try {
+  //       const response = await authApi.post('/verifyToken', {token, signal: controller.signal})
+  //       setContentVisible(true)
+  //       setLoggedInState(true)
+  //       console.log('logged in status', loginState)
+  //       // console.log(response)
+  //       const decoded = jwtDecode(token)
+  //       console.log(decoded)
+  //       setUserName(decoded.username)
+  //       setUserRole(decoded.role)
+  //       setUserId(decoded.id)
+  //     } catch (err) {
+  //       console.log(err)
+  //       if (err.status === 401) {
+  //         navigate('/auth/login', { state: { prevLocation: "/admin" } })
+  //     }
+  //   }
+  // }
+  //   checkJWT()
     return () => {
       controller.abort()
     }
-  }, [location, loginState])
+  }, [ loginState])
 
   return (
       contentVisible ? 

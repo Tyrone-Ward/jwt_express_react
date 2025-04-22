@@ -1,42 +1,25 @@
 import { useState } from 'react'
-import { useNavigate, useLocation, Link } from 'react-router-dom'
-import { authApi } from '../../api'
+import { useNavigate, Link } from 'react-router-dom'
+import { useUserLogin } from '../../stores/auth/auth.store.js'
 import { toast } from 'react-toastify'
 
 const LoginPage = () => {
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   const navigate = useNavigate()
-  const location = useLocation()
+  const login = useUserLogin()
 
-  const notify = () => toast.error('Wrong username or password.');
-
-  let prevLocation
-  try {
-    prevLocation = location.state.prevLocation
-  } catch {
-    prevLocation = '/admin'
-  }
+  const notify = () => toast.error('Wrong username and/or password.');
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await authApi.post('/login', {
-         email: username, 
-         password
-      })
-      
-      // console.log(response)
-      if (response.status === 200) {
-        // Handle successful login, e.g., redirect to dashboard
-        const resToken = response.data.accessToken
-        localStorage.setItem('token', resToken)
-        navigate(prevLocation)
-      }
+      login(email, password)
+      navigate('/admin')
     } catch (error) {
+      console.log(error.message)
       notify()
-      console.log(error)
     }
   }
 
@@ -62,13 +45,13 @@ const LoginPage = () => {
               </label>
               <div className='mt-2'>
                 <input
-                  value={username}
+                  value={email}
                   id='email'
                   name='email'
                   type='email'
                   required
                   autoComplete='email'
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                   className='block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'
                 />
               </div>
