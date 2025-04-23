@@ -36,5 +36,3 @@ export const useUsername = () => AuthStore((state) => state.userName)
 export const useUserRole = () => AuthStore((state) => state.userRole)
 export const useUserId = () => AuthStore((state) => state.userId)
 export const useIsLoggedIn = () => AuthStore((state) => state.isLoggedIn)
-
-// TODO: useLogin and useRegister hooks

@@ -1,29 +1,16 @@
 import { useState } from "react"
-import { useNavigate, Link } from "react-router-dom"
-import { authApi } from "../../api"
+import { useRegister } from "@hooks/useRegister.js"
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   
-  const navigate = useNavigate()
+  const { register } = useRegister()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // DONE: Use Axios
-    const response = await authApi.post('/register', {
-       email,
-       password,
-       username
-    })
-
-    if (response.status === 200) {
-      // Handle successful login, e.g., redirect to login
-      navigate('/auth/login')
-    } else {
-      alert('incorrect username and or password')
-    }
+    await register(username, email, password)
   }
 
   return (
