@@ -106,8 +106,8 @@ export const listUsers = async (req, res) => {
 // DONE: create controller(s) for logout
 export const logout = async (req, res) => {
   try {
-    const tokens = await RefreshToken.findAll()
-    const refreshToken = req.cookies?.refreshToken
+    const authHeader = req.headers['authorization']
+    const refreshToken = authHeader && authHeader.split(' ')[1]
     if (!refreshToken) {
       return res.status(400).json({ message: 'No refresh token provided.' })
     }
@@ -117,11 +117,7 @@ export const logout = async (req, res) => {
         tokenHash: refreshToken
       }
     })
-    // Clear the cookie
-    res.clearCookie('refreshToken', {
-      httpOnly: true,
-      sameSite: 'Lax'
-    })
+
     return res.status(200).json({ message: 'Logged out successfully.' })
   } catch (error) {
     logger.error('Logout error:', error)
