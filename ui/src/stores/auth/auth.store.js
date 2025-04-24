@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { authApi } from '../../api'
+import authDataApi from '../../api'
 
 export const AuthStore = create((set) => ({
   userName: undefined,
@@ -11,9 +11,10 @@ export const AuthStore = create((set) => ({
     set({ userRole: 'user' })
     set({ userId: undefined })
     set({ isLoggedIn: false })
-    localStorage.removeItem('token')
+    localStorage.removeItem('accessToken')
+    localStorage.removeItem('refreshToken')
     try {
-      await authApi.post('/logout', {})
+      await authDataApi.post('/logout', { withCredentials: true })
     } catch (error) {
       console.error('Error in data fetch:', error)
     }

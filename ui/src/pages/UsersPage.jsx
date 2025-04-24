@@ -4,6 +4,7 @@ import authDataApi from '../api/index.js'
 const UsersPage = () => {
   const [tableData, setTableData] = useState()
 
+  
   useEffect(() => {
     const controller = new AbortController()
     const getUsersData = async () => {

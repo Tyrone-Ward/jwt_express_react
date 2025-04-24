@@ -81,7 +81,7 @@ export const login = async (req, res) => {
     })
 
     res.append('Authorization', refreshToken)
-    res.json({ accessToken })
+    res.json({ accessToken, refreshToken })
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Server error', error: error.message })
@@ -108,6 +108,7 @@ export const logout = async (req, res) => {
   try {
     const authHeader = req.headers['authorization']
     const refreshToken = authHeader && authHeader.split(' ')[1]
+    console.log('headers:', req.headers)
     if (!refreshToken) {
       return res.status(400).json({ message: 'No refresh token provided.' })
     }
