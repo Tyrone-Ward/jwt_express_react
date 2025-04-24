@@ -11,7 +11,7 @@ export const createUser = async (email, userName, hashedPass) => {
 
     logger.info('The table for the User model was just (re)created!')
     const newUser = await User.create({ email, username: userName, hashedPass, role })
-    console.log("new User's auto-generated ID:", newUser.id)
+    logger.info("new User's auto-generated ID:", newUser.id)
   } catch (error) {
     // console.log(error.name)
     if (error.name === 'SequelizeUniqueConstraintError') {

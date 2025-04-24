@@ -1,7 +1,8 @@
 import { AppError } from '../utils/AppError.js'
+import logger from '../utils/logger.js'
 
 export const errorHandler = (error, req, res, next) => {
-  console.log(error)
+  logger.error(error)
 
   if (error.name === 'ValidationError') {
     return res.status(400).send({

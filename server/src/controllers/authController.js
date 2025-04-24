@@ -23,7 +23,7 @@ export const verifyToken = (req, res) => {
     return res.sendStatus(200)
   } catch (error) {
     // Unauthorized
-    console.log(error.message)
+    logger.log(error.message)
     if (error.message === 'jwt expired') {
       return res.status(401).json({ message: 'Token Expired' })
     }
@@ -83,7 +83,7 @@ export const login = async (req, res) => {
     res.append('Authorization', refreshToken)
     res.json({ accessToken, refreshToken })
   } catch (error) {
-    console.error(error)
+    logger.error(error)
     res.status(500).json({ message: 'Server error', error: error.message })
   }
 }
@@ -108,7 +108,6 @@ export const logout = async (req, res) => {
   try {
     const authHeader = req.headers['authorization']
     const refreshToken = authHeader && authHeader.split(' ')[1]
-    console.log('headers:', req.headers)
     if (!refreshToken) {
       return res.status(400).json({ message: 'No refresh token provided.' })
     }
@@ -123,5 +122,36 @@ export const logout = async (req, res) => {
   } catch (error) {
     logger.error('Logout error:', error)
     return res.status(500).json({ message: 'Server error during logout.' })
+  }
+}
+export const tokenRefresh = async (req, res) => {
+  try {
+    const authHeader = req.headers.authorization
+    if (!authHeader?.startsWith('Bearer ')) {
+      return res.status(401).json({ message: 'No refresh token provided.' })
+    }
+
+    const refreshToken = authHeader.split(' ')[1]
+    const stored = await RefreshToken.findOne({ where: { tokenHash: refreshToken } })
+
+    if (!stored || new Date() > stored.expiresAt) {
+      return res.status(404).json({ message: 'Invalid or expired token' })
+    }
+    const user = await User.findByPk(stored.userId)
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' })
+    }
+
+    // TODO: remove refresh token from DB
+    const newRefreshToken = jwt.sign({ id: user.id }, REFRESH_TOKEN_SECRET, { expiresIn: REFRESH_TOKEN_EXPIRES_IN })
+    const newAccessToken = jwt.sign({ username: user.username, role: user.role, id: user.id, email: user.email }, ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_EXPIRES_IN })
+
+    res.json({
+      accessToken: newAccessToken,
+      refreshToken: newRefreshToken
+    })
+  } catch (error) {
+    logger.error('Token refresh error:', error)
+    res.status(500).json({ message: 'Server error during token refresh.' })
   }
 }
