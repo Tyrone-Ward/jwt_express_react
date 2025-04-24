@@ -1,4 +1,3 @@
-import React from 'react'
 import { useUsername, useUserRole, useUserId  } from '../stores/auth/auth.store'
 
 const ProfilePage = () => {
@@ -7,6 +6,7 @@ const ProfilePage = () => {
   const uid = useUserId()
 
   return (
+    <>
     <div className='px-20 py-20'>
       <div className="px- sm:px-0">
         <h3 className="text-base/7 font-semibold text-gray-900">User Information</h3>
@@ -31,10 +31,11 @@ const ProfilePage = () => {
             <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente dolorem praesentium sit nam. Voluptas ab maxime nulla itaque commodi repellat quidem rerum ipsam distinctio nostrum ipsum, similique expedita fugit soluta!
             </dd>
-          </div> */}
+            </div> */}
         </dl>
       </div>
     </div>
+  </>
   )
 }
 

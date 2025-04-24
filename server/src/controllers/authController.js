@@ -87,8 +87,8 @@ export const login = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message })
   }
 }
-export const getUserData = async () => {
-  // Take user id locate in database and return username, email, bio, etc
+export const getProtectedData = async (req, res) => {
+  return res.status(200).send('hello world')
 }
 export const listUsers = async (req, res) => {
   // DONE: add authentication middleware
