@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { verifyToken, register, login, listUsers, logout } from '../controllers/authController.js'
-import authCheck from '../middlewares/auth.middleware.js'
+import { authCheck } from '../middlewares/auth.middleware.js'
 
 const authRouter = Router()
 

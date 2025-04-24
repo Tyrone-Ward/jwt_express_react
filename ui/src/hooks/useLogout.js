@@ -1,6 +1,5 @@
 import { useSetUserName, useSetUserId, useSetUserRole, useSetIsLoggedIn } from '../stores/auth/auth.store.js'
 import { authApi } from '../api'
-import { toast } from 'react-toastify'
 
 export const useLogout = () => {
   const setUsername = useSetUserName()
@@ -9,14 +8,19 @@ export const useLogout = () => {
   const isLoggedIn = useSetIsLoggedIn()
 
   const logout = async () => {
-    const refreshToken = localStorage.getItem(refreshToken)
+    const refreshToken = localStorage.getItem('refreshToken')
+    console.log('refreshToken', refreshToken)
     try {
-      // TODO: use DELETE method
-      const response = await authApi.post('/logout', {
-        headers: {
-          Authorization: `Bearer ${refreshToken}`
+      // TODO: Use DELETE method
+      const response = await authApi.post(
+        '/logout',
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${refreshToken}`
+          }
         }
-      })
+      )
 
       if (response.status === 200) {
         // Handle successful login, e.g., set username, role, etc
@@ -25,15 +29,10 @@ export const useLogout = () => {
         setUserRole(null)
         isLoggedIn(false)
         localStorage.removeItem('accessToken')
-        localStorage.remove('refreshToken')
+        localStorage.removeItem('refreshToken')
       }
     } catch (error) {
-      if (error.status === 400) {
-        console.log(error)
-        toast.error('Wrong username and/or password.')
-      } else {
-        console.log(error)
-      }
+      console.log(error)
     }
   }
 

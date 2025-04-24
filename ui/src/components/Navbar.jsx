@@ -1,7 +1,7 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { NavLink, Link } from 'react-router-dom'
-import { useUserLogout } from '../stores/auth/auth.store.js'
+import { useLogout } from '@hooks/useLogout.js'
 
 
 const user = {
@@ -27,7 +27,7 @@ function classNames(...classes) {
 }
 
 export const Navbar = () => {
-  const logout = useUserLogout()
+  const { logout } = useLogout()
 
   return (
     <Disclosure as="nav" className="bg-gray-800">

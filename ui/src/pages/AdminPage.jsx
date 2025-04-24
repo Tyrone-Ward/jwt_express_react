@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
-import { useUserLogout, useUsername, useIsLoggedIn } from '../stores/auth/auth.store'
+import { useUsername, useIsLoggedIn } from '../stores/auth/auth.store'
+import { useLogout } from '@hooks/useLogout'
 
 const AdminPage = () => {
   const username = useUsername()
-  const logout = useUserLogout()
+  const { logout } = useLogout()
   const loggedIn = useIsLoggedIn()
 
   return (
