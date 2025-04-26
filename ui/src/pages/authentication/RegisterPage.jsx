@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useRegister } from "@hooks/useRegister.js"
+import { Link } from 'react-router-dom'
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('')

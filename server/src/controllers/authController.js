@@ -128,6 +128,7 @@ export const tokenRefresh = async (req, res) => {
   try {
     const authHeader = req.headers.authorization
     if (!authHeader?.startsWith('Bearer ')) {
+      logger.error('No refresh token provided.')
       return res.status(401).json({ message: 'No refresh token provided.' })
     }
 
@@ -145,6 +146,13 @@ export const tokenRefresh = async (req, res) => {
     // TODO: remove refresh token from DB
     const newRefreshToken = jwt.sign({ id: user.id }, REFRESH_TOKEN_SECRET, { expiresIn: REFRESH_TOKEN_EXPIRES_IN })
     const newAccessToken = jwt.sign({ username: user.username, role: user.role, id: user.id, email: user.email }, ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_EXPIRES_IN })
+
+    await RefreshToken.sync()
+    await RefreshToken.create({
+      tokenHash: newRefreshToken,
+      userId: user.id,
+      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+    })
 
     res.json({
       accessToken: newAccessToken,

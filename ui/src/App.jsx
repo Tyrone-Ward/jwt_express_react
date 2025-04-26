@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import './App.css'
-import { useIsLoggedIn } from './stores/auth/auth.store.js'
+import { useIsLoggedIn, useSetEntryPoint } from './stores/auth/auth.store.js'
 import { Navigate } from 'react-router-dom'
 
 // Layouts
@@ -26,14 +26,15 @@ import ProfilePage from './pages/ProfilePage.jsx'
 
 function App () {
   const loggedIn = useIsLoggedIn()
+  const updateEntryPoint = useSetEntryPoint(window.location.pathname)
   
   useEffect(() => {
-    const controller = new AbortController()
     console.log('location changed')
     console.log('loggedIn:', loggedIn)
-  
+
     return () => {
-      controller.abort()
+      // controller.abort()
+      null
     }
   }, [loggedIn])
   

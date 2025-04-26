@@ -104,7 +104,7 @@ const LoginPage = () => {
 
           <p className='mt-10 text-center text-sm/6 text-gray-500'>
             Not a member?{' '}
-            <Link className='font-semibold text-indigo-600 hover:text-indigo-500' to={'/auth/register'}>
+            <Link className='font-semibold text-indigo-600 hover:text-indigo-500' to={'/admin'}>
               Register
             </Link>
           </p>
