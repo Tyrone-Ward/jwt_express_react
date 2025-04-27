@@ -26,7 +26,7 @@ import ProfilePage from './pages/ProfilePage.jsx'
 
 function App () {
   const loggedIn = useIsLoggedIn()
-  const updateEntryPoint = useSetEntryPoint(window.location.pathname)
+  useSetEntryPoint(window.location.pathname)
   
   useEffect(() => {
     console.log('location changed')

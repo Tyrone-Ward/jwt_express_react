@@ -7,6 +7,7 @@ export const createUser = async (email, userName, hashedPass) => {
   try {
     await User.sync()
     const users = await User.findAll()
+    // First user to register is admin
     const role = users.length === 0 ? 'admin' : 'user'
 
     logger.info('The table for the User model was just (re)created!')

@@ -33,7 +33,6 @@ export const verifyToken = (req, res) => {
 // 4 TODO: Add user validation
 export const register = async (req, res) => {
   try {
-    const role = 'admin'
     const { password, email, username } = req.body
 
     const salt = await bcrypt.genSalt(10)
@@ -143,7 +142,7 @@ export const tokenRefresh = async (req, res) => {
       return res.status(404).json({ message: 'User not found' })
     }
 
-    // TODO: remove refresh token from DB
+    // DONE: remove refresh token from DB
     const newRefreshToken = jwt.sign({ id: user.id }, REFRESH_TOKEN_SECRET, { expiresIn: REFRESH_TOKEN_EXPIRES_IN })
     const newAccessToken = jwt.sign({ username: user.username, role: user.role, id: user.id, email: user.email }, ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_EXPIRES_IN })
 
@@ -153,7 +152,11 @@ export const tokenRefresh = async (req, res) => {
       userId: user.id,
       expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
     })
-
+    // await RefreshToken.destroy({
+    //   where: {
+    //     tokenHash: refreshToken
+    //   }
+    // })
     res.json({
       accessToken: newAccessToken,
       refreshToken: newRefreshToken
