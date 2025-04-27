@@ -105,7 +105,7 @@ export const listUsers = async (req, res) => {
 // DONE: create controller(s) for logout
 export const logout = async (req, res) => {
   try {
-    const authHeader = req.headers['authorization']
+    const authHeader = req.headers.authorization
     const refreshToken = authHeader && authHeader.split(' ')[1]
     if (!refreshToken) {
       return res.status(400).json({ message: 'No refresh token provided.' })

@@ -6,7 +6,7 @@ import { useIsLoggedIn, useSetUserName, useSetUserId, useSetUserRole, useSetIsLo
 import { jwtDecode } from 'jwt-decode'
 
 const RootLayout = () => {
-  const [contentVisible, setContentVisible] = useState(true)
+  const [contentVisible, setContentVisible] = useState(false)
 
   const loggedIn = useIsLoggedIn()
   const setUsername = useSetUserName()
@@ -54,14 +54,18 @@ const RootLayout = () => {
       }
     }
 
-    if (!loggedIn) initAuth()
+    if (!loggedIn) {
+      initAuth()
+    } else {
+      setContentVisible(true)
+    }
   }, [])
 
   return (
     contentVisible
       ? <main>
-        <Navbar />
-        <Outlet />
+          <Navbar />
+          <Outlet />
         </main>
       : <div />
   )

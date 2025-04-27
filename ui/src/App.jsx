@@ -3,12 +3,11 @@ import {
   BrowserRouter,
   Route,
   Routes,
-  RouterProvider
+  Navigate
 } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import './App.css'
 import { useIsLoggedIn, useSetEntryPoint } from './stores/auth/auth.store.js'
-import { Navigate } from 'react-router-dom'
 
 // Layouts
 import RootLayout from './layouts/RootLayout.jsx'
@@ -27,7 +26,7 @@ import ProfilePage from './pages/ProfilePage.jsx'
 function App () {
   const loggedIn = useIsLoggedIn()
   useSetEntryPoint(window.location.pathname)
-  
+
   useEffect(() => {
     console.log('location changed')
     console.log('loggedIn:', loggedIn)
@@ -37,28 +36,27 @@ function App () {
       null
     }
   }, [loggedIn])
-  
-  
+
   return (
     <>
-    <BrowserRouter>
-      <Routes>
-        <Route path='/auth' element={<AuthLayout />}>
-          <Route path='login' element={<LoginPage />} />
-          <Route path='register' element={<RegisterPage />} />
-        </Route>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/auth' element={<AuthLayout />}>
+            <Route path='login' element={<LoginPage />} />
+            <Route path='register' element={<RegisterPage />} />
+          </Route>
 
-        <Route path='/' element={<RootLayout />}>
-          <Route index element={loggedIn ? <HomePage/> : <Navigate to="/auth/login"/>} />
-          <Route path='admin' element={loggedIn ? <AdminPage /> : <Navigate to="/auth/login"/>} />
-          <Route path='users' element={loggedIn ? <UsersPage /> : <Navigate to="/auth/login"/>} />
-          <Route path='profile' element={loggedIn ? <ProfilePage /> : <Navigate to="/auth/login"/>} />
-          <Route path='public' element={<PublicPage />} />
-        <Route path='*' element={<NotFound />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-    <ToastContainer />
+          <Route path='/' element={<RootLayout />}>
+            <Route index element={loggedIn ? <HomePage /> : <Navigate to='/auth/login' />} />
+            <Route path='admin' element={loggedIn ? <AdminPage /> : <Navigate to='/auth/login' />} />
+            <Route path='users' element={loggedIn ? <UsersPage /> : <Navigate to='/auth/login' />} />
+            <Route path='profile' element={loggedIn ? <ProfilePage /> : <Navigate to='/auth/login' />} />
+            <Route path='public' element={<PublicPage />} />
+            <Route path='*' element={<NotFound />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+      <ToastContainer />
     </>
   )
 }

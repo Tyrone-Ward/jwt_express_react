@@ -10,7 +10,7 @@ const LoginPage = () => {
   const navigate = useNavigate()
   const { login } = useLogin()
 
-  const notify = () => toast.error('Wrong username and/or password.');
+  const notify = () => toast.error('Wrong username and/or password.')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -65,7 +65,7 @@ const LoginPage = () => {
                 <div className='text-sm'>
                   <a href='#' className='font-semibold text-indigo-600 hover:text-indigo-500'>
                     Forgot password?
-                    </a>
+                  </a>
                 </div>
               </div>
               <div className='mt-2'>
@@ -104,7 +104,7 @@ const LoginPage = () => {
 
           <p className='mt-10 text-center text-sm/6 text-gray-500'>
             Not a member?{' '}
-            <Link className='font-semibold text-indigo-600 hover:text-indigo-500' to={'/admin'}>
+            <Link className='font-semibold text-indigo-600 hover:text-indigo-500' to='/admin'>
               Register
             </Link>
           </p>

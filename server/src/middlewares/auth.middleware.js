@@ -5,7 +5,7 @@ const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET
 // DONE: Add isAdmin and isAuthorized middleware
 
 export const authCheck = (req, res, next) => {
-  const authHeader = req.headers['authorization']
+  const authHeader = req.headers.authorization
 
   // Format: "Bearer <token>"
   const token = authHeader && authHeader.split(' ')[1]
@@ -28,7 +28,7 @@ export const authCheck = (req, res, next) => {
 }
 
 export const isAuthenticated = (req, res, next) => {
-  const authHeader = req.headers['authorization']
+  const authHeader = req.headers.authorization
   const token = authHeader && authHeader.split(' ')[1]
   if (!token) {
     res.status(401)
@@ -48,7 +48,7 @@ export const isAuthenticated = (req, res, next) => {
 }
 
 export const isAdmin = (req, res, next) => {
-  const authHeader = req.headers['authorization']
+  const authHeader = req.headers.authorization
 
   // Format: "Bearer <token>"
   const token = authHeader && authHeader.split(' ')[1]

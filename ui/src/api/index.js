@@ -1,11 +1,11 @@
 import axios from 'axios'
 
 export const authApi = axios.create({
-  baseURL: `/auth`
+  baseURL: '/auth'
 })
 
 const authDataApi = axios.create({
-  baseURL: `/auth`,
+  baseURL: '/auth',
   headers: {
     'Content-Type': 'application/json'
   }
@@ -39,7 +39,7 @@ authDataApi.interceptors.response.use(
         localStorage.setItem('accessToken', accessToken)
         localStorage.setItem('refreshToken', newRefreshToken)
         // Update the authorization header with the new access token.
-        authDataApi.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
+        authDataApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`
         return authDataApi(originalRequest) // Retry the original request with the new access token.
       } catch (refreshError) {
         // Handle refresh token errors by clearing stored tokens and redirecting to the login page.
